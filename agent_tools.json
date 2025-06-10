@@ -1,0 +1,91 @@
+{
+  "tools": [
+    {
+      "name": "schedule_viewer",
+      "description": "Retrieves the current shift schedule from Google Drive",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The date to view the schedule for (YYYY-MM-DD)"
+          }
+        }
+      }
+    },
+    {
+      "name": "shift_request_processor",
+      "description": "Processes a shift request and checks for conflicts",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string",
+            "description": "The ID of the employee making the request"
+          },
+          "request_type": {
+            "type": "string",
+            "enum": ["swap", "time_off", "overtime"],
+            "description": "The type of shift request"
+          },
+          "date": {
+            "type": "string",
+            "description": "The date of the requested shift (YYYY-MM-DD)"
+          },
+          "shift_time": {
+            "type": "string",
+            "description": "The time of the requested shift (HH:MM)"
+          }
+        }
+      }
+    },
+    {
+      "name": "conflict_detector",
+      "description": "Checks for scheduling conflicts with the current request",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string",
+            "description": "The ID of the employee to check"
+          },
+          "date": {
+            "type": "string",
+            "description": "The date to check for conflicts (YYYY-MM-DD)"
+          },
+          "shift_time": {
+            "type": "string",
+            "description": "The time to check for conflicts (HH:MM)"
+          }
+        }
+      }
+    },
+    {
+      "name": "schedule_updater",
+      "description": "Updates the schedule in Google Drive with the new shift information",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "employee_id": {
+            "type": "string",
+            "description": "The ID of the employee"
+          },
+          "date": {
+            "type": "string",
+            "description": "The date of the shift (YYYY-MM-DD)"
+          },
+          "shift_time": {
+            "type": "string",
+            "description": "The time of the shift (HH:MM)"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["add", "remove", "update"],
+            "description": "The action to perform on the schedule"
+          }
+        }
+      }
+    }
+  ],
+  "system_prompt": "You are an AI assistant responsible for managing shift schedules. You can process shift requests, check for conflicts, and update the schedule. Always verify the request details and ensure there are no conflicts before making any changes. Provide clear and concise responses to users."
+} 
